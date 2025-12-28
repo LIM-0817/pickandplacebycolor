@@ -1,29 +1,29 @@
 # Panda robot이 색을 인식해서 pick and place
 
 ## 초기 세팅
-''' bash
+``` bash
 colcon build --symlink-install 
-'''
+```
 
-''' bash
+``` bash
 source ./install/setup.bash 
-'''
+```
 
 ## gazebo, moveit, rviz2 등 실행
-''' bash
+``` bash
 ros2 launch panda_bringup bringup.launch.xml 
-'''
+```
 
 ## pick and place
 - Red
-''' bash
+``` bash
 ros2 run pymoveit2 pick_and_place.py --ros-args -p target_color:=R
-'''
+```
 - Green
-''' bash
+``` bash
 ros2 run pymoveit2 pick_and_place.py --ros-args -p target_color:=G
-'''
+```
 - Blue
-''' bash
+``` bash
 ros2 run pymoveit2 pick_and_place.py --ros-args -p target_color:=B
-'''
+```
