@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="robot_name" default="panda"/>
+    <arg name="robot_xacro" default="$(find-pkg-share $(var robot_name)_description)/urdf/$(var robot_name).urdf.xacro"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="is_ignition" default="true"/>
+    <arg name="controller_config" default="$(find-pkg-share panda_controller)/config/panda_controllers.yaml"/>
+
+
+    <!-- controller manager 노드. -->
+    <!-- 단, gazebo에서는 gazebo.xacro의 plugin이 controller_manager로서 역할을 해주기 때문에 controller_manager을 로딩할 필요가 없다. -->
+
+    <!-- <node pkg="controller_manager" exec="ros2_control_node" name="controller_manager">
+        <param name="robot_description" value="$(command 'xacro $(var robot_xacro) is_ignition:=$(var is_ignition)')"/>
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
+        <param from="$(var controller_config)"/>
+    </node> -->
+
+
+    <!-- controller_manager라는 파일의 spawner을 실행. 이때 노드의 이름을 joint_state_broadcaster로 함 -->
+    <!-- 이 joint_state_broadcaster라는 노드는 controllers.yaml의 파라미터를 보고 해당 노드를 실행함. -->
+    <!-- "- -controller-manager /controller_manager" 은 해당 controller을 어떤 manager이 관리하게 할 건지 설정(다중 로봇을 한번에 관리하는 경우 manager지정이 필요) -->
+    <node pkg="controller_manager" exec="spawner" 
+        args="joint_state_broadcaster --controller-manager /controller_manager">
+    </node>
+
+    <node pkg="controller_manager" exec="spawner" 
+        args="arm_controller --controller-manager /controller_manager --param-file $(var controller_config)">
+        <param from="$(var controller_config)"/>
+    </node>
+
+    <node pkg="controller_manager" exec="spawner" 
+        args="gripper_controller --controller-manager /controller_manager --param-file $(var controller_config)">
+
+    </node>
+
+</launch>

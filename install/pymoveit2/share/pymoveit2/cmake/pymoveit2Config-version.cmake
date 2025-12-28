@@ -1,0 +1,1 @@
+/home/lim/pick_and_place_color/build/pymoveit2/ament_cmake_core/pymoveit2Config-version.cmake

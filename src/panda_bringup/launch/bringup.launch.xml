@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>    
+    <include file="$(find-pkg-share panda_description)/launch/gazebo.launch.xml"/>
+    <include file="$(find-pkg-share panda_controller)/launch/controller.launch.xml"/>
+    <include file="$(find-pkg-share panda_moveit)/launch/moveit.launch.py"/>
+
+    <node pkg="panda_vision" exec="color_detector" output="screen"/>
+</launch>

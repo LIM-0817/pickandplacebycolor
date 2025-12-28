@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<!-- 다른 launch파일에 robot_state_publisher 선언 없이 include하기 위해 사용하는 파일 -->
+<launch>
+    <arg name="robot_name" default="panda"/>
+    <arg name="robot_xacro" default="$(find-pkg-share $(var robot_name)_description)/urdf/$(var robot_name).urdf.xacro"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="is_ignition" default="true"/>
+
+    <node pkg="robot_state_publisher" exec="robot_state_publisher"
+                    name="robot_state_publisher" output="screen">
+        <param name="robot_description" value="$(command 'xacro $(var robot_xacro) is_ignition:=$(var is_ignition)')"/>
+        <param name='use_sim_time' value='$(var use_sim_time)'/>
+    </node>
+</launch>

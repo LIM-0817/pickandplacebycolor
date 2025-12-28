@@ -1,0 +1,1 @@
+/home/lim/pick_and_place_color/build/panda_description/ament_cmake_core/panda_descriptionConfig.cmake

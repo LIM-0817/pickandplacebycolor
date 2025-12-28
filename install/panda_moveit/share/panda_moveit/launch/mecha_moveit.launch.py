@@ -1,0 +1,1 @@
+/home/lim/pick_and_place_color/src/panda_moveit/launch/mecha_moveit.launch.py

@@ -1,0 +1,6 @@
+# VS Code 관련 임시 파일 제외
+.vscode/*.db.vscode/
+*.db
+build/
+devel/
+log/

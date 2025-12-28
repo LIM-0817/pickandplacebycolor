@@ -1,0 +1,1 @@
+/home/lim/pick_and_place_color/build/panda_controller/ament_cmake_environment_hooks/local_setup.bash

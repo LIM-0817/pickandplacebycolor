@@ -1,0 +1,41 @@
+<!-- controller 없이 로봇만 띄우는 경우는 로봇이 중력을 이기지 못하고 
+내려앉아서 흐느적 거림.(조인트가 힘 없는 자유 상태가 되기 때문)-->
+
+<launch>
+    <arg name="robot_name" default="panda"/>
+    <arg name="world_name" default="empty.world"/>
+    <arg name="world" default="$(find-pkg-share panda_description)/worlds/$(var world_name)"/>
+
+    <arg name="is_ignition" default="false"/>
+    <arg name="rviz_config_path" default="$(find-pkg-share panda_description)/rviz/display.rviz"/>
+
+    <!-- include를 통해 가제보 launch파일을 가져와서 실행 -->
+    <!-- 첫번째로 gazebo의 서버를 띄우고 월드를 로딩함 -->
+    <include file="$(find-pkg-share ros_gz_sim)/launch/gz_sim.launch.py">
+        <arg name='gz_args' value='-r -s -v 4 $(var world)'/>
+        <arg name='on_exit_shutdown' value='true'/>
+    </include>
+
+    <!-- 두번째로 첫번째 서버에 연결해서 gazebo의 그래픽을 띄움 -->
+    <include file="$(find-pkg-share ros_gz_sim)/launch/gz_sim.launch.py">
+        <arg name='gz_args' value='-g -v 4'/>
+    </include>
+
+    <!-- robot state publisher 불러위기 위해 upload.launch.xml include -->
+    <include file="$(find-pkg-share panda_description)/launch/upload.launch.xml">
+        <arg name="use_sim_time" value="true"/>
+    </include>
+    
+
+    <!-- ros에서 gazebo로 robot 스폰하기. 현재 올라온 robot_description 토픽을 읽어서 가제보에 스폰함-->
+    <node pkg="ros_gz_sim" exec="create" name='create' output='screen' 
+                    args="-name $(var robot_name) -topic robot_description -x 0.0 -y 0.0 -z 0.0 -r 0.0 -p 0.0 -y 0.0 -J panda_joint4 -1.57"/>
+
+    <!-- ros_gz_bridge -->
+    <node pkg="ros_gz_bridge" exec="parameter_bridge" name='parameter_bridge' output='screen' 
+                    args="/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock /camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo"/>
+
+    <!-- 가제보상의 카메라 영상 topic은 따로 변환을 위한 노드가 있음 -->
+    <node pkg="ros_gz_image" exec="image_bridge" name='image_bridge' output='screen' args="/camera/image_raw"/>
+    <node pkg="ros_gz_image" exec="image_bridge" name='image_bridge' output='screen' args="/camera"/>
+</launch>
