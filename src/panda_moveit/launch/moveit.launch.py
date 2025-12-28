@@ -32,7 +32,10 @@ def generate_launch_description():
             )
         .robot_description_semantic(file_path="config/panda.srdf")
         .trajectory_execution(file_path="config/moveit_controllers.yaml")
-        .to_moveit_configs()
+        .planning_pipelines(
+            pipelines=["ompl"]
+        )
+        .to_moveit_configs() 
     )
 
     # moveit 노드 선언하기. moveit의 노드는 경로 계획 및 실행, 로봇 상태와 주변 환경에 대한 센서 정보를 받음
