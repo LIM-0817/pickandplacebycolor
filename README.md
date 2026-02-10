@@ -1,5 +1,7 @@
 # Panda robot이 색을 인식해서 pick and place
 
+<img width="1694" height="1085" alt="Image" src="https://github.com/user-attachments/assets/6d27fc5f-bcf1-41e4-b9ef-d22fc19f6701" />
+
 ## 초기 세팅
 ``` bash
 colcon build --symlink-install 
