@@ -1,4 +1,4 @@
-# Panda robot이 색을 인식해서 pick and place
+# Robotics Project: color recognition -> pick and place 
 
 <img width="1694" height="1085" alt="Image" src="https://github.com/user-attachments/assets/6d27fc5f-bcf1-41e4-b9ef-d22fc19f6701" />
 
